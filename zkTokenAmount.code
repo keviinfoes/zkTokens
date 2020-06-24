@@ -1,0 +1,16 @@
+import "EMBED/unpack" as unpack
+import "utils/pack/pack128" as pack128
+import "hashes/sha256/512bitPacked.code" as sha256packed
+
+def main(private field rPk1, private field rPk2, public field amount) -> (field[2]):
+    field[254] ua = unpack(rPk1) 
+    field[256] uaa = [0, 0, ...ua]
+    field[254] ub = unpack(rPk2)
+    field[256] ubb = [0, 0, ...ub]
+    field rPk1a = pack128(uaa[0..128])
+    field rPk1b = pack128(uaa[128..256])
+    field rPk2a = pack128(ubb[0..128])
+
+    hash = sha256packed([rPk1a, rPk1b, rPk2a, amount])
+    return hash
+   
