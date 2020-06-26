@@ -59,7 +59,7 @@ contract zkTokenFactory {
   }
 
   /**
-    * @dev Deploy a TrustlessFund contract.
+    * @dev Deploy a zkToken contract.
   */
   function zkTokenCreate(address _token) public {
     require(token_zktoken[_token] == address(0), 'factory: token is already created');
