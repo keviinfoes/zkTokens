@@ -20,6 +20,8 @@ contract zkTokenFactory {
   address public verifierDeposit;
   address public verifierWithdraw;
   address public verifierTransfer;
+  address public verifierMixerIn;
+  address public verifierMixerOut;
 
   /**
     * @notice Emits when an asset is created.
@@ -29,10 +31,17 @@ contract zkTokenFactory {
   /**
     * @notice Constructor -> sets the verifiers for zkTokens
   */
-  constructor(address _verifierDeposit, address _verifierWithdraw, address _verifierTransfer) public {
+  constructor(address _verifierDeposit, 
+              address _verifierWithdraw, 
+              address _verifierTransfer,
+              address _verifierMixerIn,
+              address _verifierMixerOut
+    ) public {
       verifierDeposit = _verifierDeposit;
       verifierWithdraw = _verifierWithdraw;
       verifierTransfer = _verifierTransfer;
+      verifierMixerIn = _verifierMixerIn;
+      verifierMixerOut = _verifierMixerOut;
   }
 
   /**
@@ -55,7 +64,7 @@ contract zkTokenFactory {
   function zkTokenCreate(address _token) public {
     require(token_zktoken[_token] == address(0), 'factory: token is already created');
     zkToken token = new zkToken();
-    token.initialize(_token, verifierDeposit, verifierWithdraw, verifierTransfer);
+    token.initialize(_token, verifierDeposit, verifierWithdraw, verifierTransfer, verifierMixerIn, verifierMixerOut);
     token_zktoken[_token] = address(token);
     zktoken_token[address(token)] = _token;
     id++;

@@ -36,7 +36,7 @@ contract('zkToken', async accounts => {
 				["0x000000000000000000000000000000000000000000000000000000000000000a", "0x00000000000000000000000000000000b828cbc3bda1124784e9a1be808cc9ae", "0x0000000000000000000000000000000083ad7376f7bf5152b64ee4939cc87cb9"]
 			)
 			let note = await ZKToken.notes("0x00000000000000000000000000000000b828cbc3bda1124784e9a1be808cc9ae")
-			let inverse = await ZKToken.inverse("0x0000000000000000000000000000000083ad7376f7bf5152b64ee4939cc87cb9")
+			let inverse = await ZKToken.notes("0x0000000000000000000000000000000083ad7376f7bf5152b64ee4939cc87cb9")
 			assert.equal(note.toString(16), "83ad7376f7bf5152b64ee4939cc87cb9", "zkToken: note is not registered")
 			assert.equal(inverse.toString(16), "b828cbc3bda1124784e9a1be808cc9ae", "zkToken: note is not registered")
 		})	
@@ -44,22 +44,22 @@ contract('zkToken', async accounts => {
 	describe('zkTokenTransfer()', function () {
 		it('should transfer zkToken - burn old note and create new note', async () => {
 			await ZKToken.transfer(
-				["0x2cc52505d21c4159395a6f678492c7ff0c7558bdd5e6a2a17ac0957c61500ab5", "0x27f0c3487b48a776f004ec2a38941c85078fccc7f9615a06619cd0d58a561ba0"],
-				[["0x04db5909d22113be5b1d981813a0e71531dc6ae2a83322ac1365f064843667a5", "0x0ed295be7913b293f7eeaee9ad078a79ea53370add7c65d091001952fbf3dc13"], 
-				["0x2054bb735dd016fabba5372855f6549fe57c6a6e66a327e4a0213baead54e93c", "0x1996d1b7c0bd8332c4621f0a2b2a97bd323a3dca8a358125cc2fe58de42beb57"]],
-				["0x11070c50e499e1c54ddf494a67e7ebec28ab7d863ee906f0ab89bf81f82b1fd7", "0x2c4b5bf8199187030fe3bd8df44accd0bce0e39512032c294c41182291b90fdf"],
-				["0x00000000000000000000000000000000b828cbc3bda1124784e9a1be808cc9ae","0x0000000000000000000000000000000083ad7376f7bf5152b64ee4939cc87cb9","0x00000000000000000000000000000000e0478c766086db39e37d514918db5749","0x00000000000000000000000000000000c0582d7f4be897adcac6b2611dfa8f35","0x0000000000000000000000000000000058f45d4a8c5c491d8dd2c9bcd0d99da6","0x000000000000000000000000000000004153e3c4b8ab5426d281f625a3dac5a5"]
+				["0x2262b713f26ab4a52153b46d903006f32be07b7d9ba508158eb39aa61e4df688", "0x0e30b6135d473ae53520316ad83711bdcadd07bf07a540aac43fa46d04ddfe32"],
+				[["0x0346a90264118a721dff40201f637f55917516f19d6a548f84d87de5b9e31be5", "0x02398b5a6310785df11709e78b9bdd93921494b835c5452f86e8f96daa21470c"], 
+				["0x28636b517cb48a13ba6bcf78731bb9ccadd49172b73a7e6c992ecaa61017da74", "0x1d67350d0f871448cfec0f0de7d04829e729c1f2c8d52d0b88a61a26c1647056"]],
+				["0x16afcd49fa940f936ce954bac36b0955d1e9e27151d2fc058ce2c8fa2afe9328", "0x0b80403eabc04f5fdd54804f3b64686dfc6331320bcac3de47773f549bba4afb"],
+				["0x00000000000000000000000000000000b828cbc3bda1124784e9a1be808cc9ae","0x0000000000000000000000000000000083ad7376f7bf5152b64ee4939cc87cb9","0x000000000000000000000000000000008192d9c34e2e9e6f143f388ab300b3fe","0x00000000000000000000000000000000c7118055d63eb796040a9ba27693dd73","0x0000000000000000000000000000000058f45d4a8c5c491d8dd2c9bcd0d99da6","0x000000000000000000000000000000004153e3c4b8ab5426d281f625a3dac5a5"]
 			)
 			let noteold = await ZKToken.notes("0x00000000000000000000000000000000b828cbc3bda1124784e9a1be808cc9ae")
-			let inverseold = await ZKToken.inverse("0x0000000000000000000000000000000083ad7376f7bf5152b64ee4939cc87cb9")
+			let inverseold = await ZKToken.notes("0x0000000000000000000000000000000083ad7376f7bf5152b64ee4939cc87cb9")
 			assert.equal(noteold.toString(), "0", "zkToken: old note is not removed")
 			assert.equal(inverseold.toString(), "0", "zkToken: old note is not removed")
-			let noteA = await ZKToken.notes("0x00000000000000000000000000000000e0478c766086db39e37d514918db5749")
-			let inverseA = await ZKToken.inverse("0x00000000000000000000000000000000c0582d7f4be897adcac6b2611dfa8f35")
+			let noteA = await ZKToken.notes("0x000000000000000000000000000000008192d9c34e2e9e6f143f388ab300b3fe")
+			let inverseA = await ZKToken.notes("0x00000000000000000000000000000000c7118055d63eb796040a9ba27693dd73")
 			let noteB = await ZKToken.notes("0x0000000000000000000000000000000058f45d4a8c5c491d8dd2c9bcd0d99da6")
-			let inverseB = await ZKToken.inverse("0x000000000000000000000000000000004153e3c4b8ab5426d281f625a3dac5a5")
-			assert.equal(noteA.toString(16), "c0582d7f4be897adcac6b2611dfa8f35", "zkToken: new note is not registered")
-			assert.equal(inverseA.toString(16), "e0478c766086db39e37d514918db5749", "zkToken: new note is not registered")
+			let inverseB = await ZKToken.notes("0x000000000000000000000000000000004153e3c4b8ab5426d281f625a3dac5a5")
+			assert.equal(noteA.toString(16), "c7118055d63eb796040a9ba27693dd73", "zkToken: new note is not registered")
+			assert.equal(inverseA.toString(16), "8192d9c34e2e9e6f143f388ab300b3fe", "zkToken: new note is not registered")
 			assert.equal(noteB.toString(16), "4153e3c4b8ab5426d281f625a3dac5a5", "zkToken: new note is not registered")
 			assert.equal(inverseB.toString(16), "58f45d4a8c5c491d8dd2c9bcd0d99da6", "zkToken: new note is not registered")
 		})	
@@ -74,9 +74,49 @@ contract('zkToken', async accounts => {
 				["0x0000000000000000000000000000000000000000000000000000000000000005","0x0000000000000000000000000000000058f45d4a8c5c491d8dd2c9bcd0d99da6","0x000000000000000000000000000000004153e3c4b8ab5426d281f625a3dac5a5","0x000000000000000000000000f1cc7eb5b67d15e5e07f0812bcab9cece21ce008","0x000000000000000000000000f1cc7eb5b67d15e5e07f0812bcab9cece21ce008"]
 			)
 			let noteW = await ZKToken.notes("0x0000000000000000000000000000000058f45d4a8c5c491d8dd2c9bcd0d99da6")
-			let inverseW = await ZKToken.inverse("0x000000000000000000000000000000004153e3c4b8ab5426d281f625a3dac5a5")
+			let inverseW = await ZKToken.notes("0x000000000000000000000000000000004153e3c4b8ab5426d281f625a3dac5a5")
 			assert.equal(noteW.toString(), "0", "zkToken: old note is not removed")
 			assert.equal(inverseW.toString(), "0", "zkToken: old note is not removed")
+		})	
+	})
+	describe('zkTokenMixIn()', function () {
+		it('should add input zkToken to mixer', async () => {
+			await ZKToken.mixerDeposit(
+				["0x302b3af44cb3eca7ccdcf575fb429171ab527dcab89cae401da7948c77ce02e0", "0x2713f6d043819042f165eb78a162565725d47b2a4c90beb021ffd545be88dfe0"],
+				[["0x2288d1269a57ee839e6186a8e6cd78ad0c0dab3d0b3382ee7cc8a4e107775c18", "0x083265a5c446ab67aae2aaeca1b781b9ced8a406bf5f72adb720129e738287e3"],
+				["0x03cb6713909c720918a267644f1f2e46d3cfbfca9c48ba0052aa0dbdae8f90c9", "0x04eceeaaa82229a2ee0bf2324b2b8a2dff364f2bf78455d038548efa7a54c66e"]],
+				["0x2f77d7422d5aaa72c2ed79de08bcd752ebb5d638293bd80b10808cfaf5d74af8", "0x01992e709b38aa79a853c93b0e2e0975c7a90b205ad1d0bd85f5fb9eaaaddf76"],
+				["0x000000000000000000000000000000008192d9c34e2e9e6f143f388ab300b3fe","0x00000000000000000000000000000000c7118055d63eb796040a9ba27693dd73","0x00000000000000000000000000000000432cf8111ff71f372cd5dc42bf47f779","0x0000000000000000000000000000000019ab80fd8235c83aee126bfee020e12c"]
+			)
+			let note = await ZKToken.notes("0x000000000000000000000000000000008192d9c34e2e9e6f143f388ab300b3fe")
+			let inverse = await ZKToken.notes("0x00000000000000000000000000000000c7118055d63eb796040a9ba27693dd73")
+			assert.equal(note.toString(), "0", "zkToken: old note is not removed")
+			assert.equal(inverse.toString(), "0", "zkToken: old note is not removed")
+			let notesM = await ZKToken.mixerNotes("0x000000000000000000000000000000008192d9c34e2e9e6f143f388ab300b3fe")
+			let inverseM = await ZKToken.mixerNotes("0x00000000000000000000000000000000c7118055d63eb796040a9ba27693dd73")
+			assert.equal(notesM.toString(16), "c7118055d63eb796040a9ba27693dd73", "zkToken: note is not added to mixer")
+			assert.equal(inverseM.toString(16), "8192d9c34e2e9e6f143f388ab300b3fe", "zkToken: note is not added to mixer")
+			let commit = await ZKToken.mixerCommit("0x00000000000000000000000000000000432cf8111ff71f372cd5dc42bf47f779")
+			let inversecommit = await ZKToken.mixerCommit("0x0000000000000000000000000000000019ab80fd8235c83aee126bfee020e12c")
+			assert.equal(commit.toString(16), "19ab80fd8235c83aee126bfee020e12c", "zkToken: commit is not added to mixer")
+			assert.equal(inversecommit.toString(16), "432cf8111ff71f372cd5dc42bf47f779", "zkToken: commit is not added to mixer")
+		})	
+	})
+	describe('zkTokenMixOut()', function () {
+		it('should create new output', async () => {
+			await ZKToken.mixerWithdraw(
+				["0x2905a0e9c132acda3606e3eb9edcd236c1c646374f5fffa619476092018db6e8", "0x0ec9d44193ef16367e8f59b91110db996f7c2961b4cb0d115cdd4c785ad71b67"],
+				[["0x1f95fe88ef4be3afc509cd994a96a83c4faf2c05c9179f03ffd385673c26dc7c", "0x065a3ad24dc4df21ca2829532717dd063d23670bbff0e8ef4c0d05c6d05eb52b"],
+				["0x2d083f9b0cd7826fb67327a5d8519a2c1eaec5e71b40fffd89a2e6041134acea", "0x17c7708d708dc4c7ece95db6eb53820140e8eaece81dff0ccf7d9f15deb2462b"]],
+				["0x1bffdadff044c7f11ac1e07c14aeb5fe85e233b5e68e44a83cb4fc424dd634c5", "0x0160037ebb185b90fce8b9d8ff2357b93bbe1fbf5abbd26126554424fe201309"],
+				["0x00000000000000000000000000000000000000000000000000000000075bcd15","0x00000000000000000000000000000000432cf8111ff71f372cd5dc42bf47f779","0x0000000000000000000000000000000019ab80fd8235c83aee126bfee020e12c"]
+			)
+			let claim = await ZKToken.claim("0x00000000000000000000000000000000000000000000000000000000075bcd15")
+			assert.equal(claim, true, "zkToken: claim is not added to mixer")
+			let note = await ZKToken.notes("0x00000000000000000000000000000000432cf8111ff71f372cd5dc42bf47f779")
+			let inverse = await ZKToken.notes("0x0000000000000000000000000000000019ab80fd8235c83aee126bfee020e12c")
+			assert.equal(note.toString(16), "19ab80fd8235c83aee126bfee020e12c", "zkToken: old note is not added")
+			assert.equal(inverse.toString(16), "432cf8111ff71f372cd5dc42bf47f779", "zkToken: new note is not added")
 		})	
 	})
 });
