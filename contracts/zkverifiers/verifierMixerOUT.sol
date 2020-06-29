@@ -607,5 +607,6 @@ contract VerifierMixOut {
         }
         require (verify(inputValues, proof) == 0, "Proof verify failed.");
         emit Verified("Transaction successfully verified.");
+	return true; 
     }
 }
