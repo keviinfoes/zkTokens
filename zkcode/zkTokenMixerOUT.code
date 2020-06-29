@@ -1,0 +1,24 @@
+import "EMBED/unpack" as unpack
+import "utils/pack/pack128" as pack128
+
+import "ecc/babyjubjubParams" as context
+import "ecc/proofOfOwnership.zok"
+import "hashes/sha256/512bitPacked.code" as sha256packed
+
+def main(private field commitA, private field commitB, private field rPk1, private field rPk2, private field amount, public field secretA, private field secretB) -> (field[2]):
+    
+    field[254] ra = unpack(rPk1) 
+    field[256] raa = [0, 0, ...ra]
+    field[254] rb = unpack(rPk2)
+    field[256] rbb = [0, 0, ...rb]
+    field rPk1a = pack128(raa[0..128])
+    field rPk1b = pack128(raa[128..256])
+    field rPk2a = pack128(rbb[0..128])
+    field[2] rhashnew = sha256packed([rPk1a, rPk1b, rPk2a, amount])
+
+    //calculate commitment with the secretA and secretB - secretA is made public for withdraw
+    field[2] commit = sha256packed([rhashnew[0], rhashnew[1], secretA, secretB])
+    commit[0] = commitA
+    commit[1] = commitB
+
+    return commit

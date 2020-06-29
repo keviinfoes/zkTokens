@@ -1,0 +1,12 @@
+import "ecc/edwardsAdd" as add
+import "ecc/edwardsScalarMult" as multiply
+import "utils/pack/nonStrictUnpack256" as unpack256
+import "ecc/babyjubjubParams" as context
+
+def main(field sk) -> (field[2]):
+    context = context()
+    field[2] G = [context[4], context[5]]
+    field[256] skBits = unpack256(sk)
+    field[2] ptExp = multiply(skBits, G, context)
+
+    return ptExp

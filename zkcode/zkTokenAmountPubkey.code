@@ -1,0 +1,30 @@
+import "EMBED/unpack" as unpack
+import "utils/pack/pack128" as pack128
+
+import "ecc/babyjubjubParams" as context
+import "ecc/proofOfOwnership.zok"
+import "hashes/sha256/512bitPacked.code" as sha256packed
+
+def main(private field sk, private field oPk1, private field oPk2, public field amount, public field h1, public field h2, public field pubkey) -> (field):
+    
+    //check previous hash [owner public key]
+    field[254] ua = unpack(oPk1) 
+    field[256] uaa = [0, 0, ...ua]
+    field[254] ub = unpack(oPk2)
+    field[256] ubb = [0, 0, ...ub]
+    field oPk1a = pack128(uaa[0..128])
+    field oPk1b = pack128(uaa[128..256])
+    field oPk2a = pack128(ubb[0..128])
+
+    hash = sha256packed([oPk1a, oPk1b, oPk2a, amount])
+    hash[0] == h1
+    hash[1] == h2 
+
+    //check privatekey
+    context = context()
+    field[2] G = [context[4], context[5]]
+    field[2] oPk = [oPk1, oPk2]
+    field out = proofOfOwnership(oPk, sk, context)
+    out == 1
+
+    return pubkey
