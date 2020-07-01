@@ -42,7 +42,9 @@ The note mixer hides the link between two notes.
 
 The mixer requires a deposit and a withdraw. The link between deposit and withdraw is hidden using zk-proofs. To mix a note:
 1. Generate the proof for deposit to mixer using the `zkTokenMixerIN proving.key` or for withdraw from mixer using the `zkTokenMixerOUT proving.key`.
-2. Call `mixerDeposit()` or `mixerWithdraw()` with the proof generated above. 
+2. Call `mixerDeposit()` or `mixerWithdraw()` with the proof generated above.
+
+IMPORTANT: This implementation of the mixer does not contain the merkle tree root hash check. This means that it is possible to generate proofs for withdraw for non deposited commitments. 
 
 ## Test
 To test the implementation run `truffle test`. The test also includes a gas analyses. ZK-proofs are expensive because of the computation needed. 
